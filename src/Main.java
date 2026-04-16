@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 class Bogie {
     String name;
@@ -9,10 +8,6 @@ class Bogie {
         this.name = name;
         this.capacity = capacity;
     }
-
-    public String toString() {
-        return name + " -> " + capacity;
-    }
 }
 
 public class TrainConsistManagementApp {
@@ -21,17 +16,13 @@ public class TrainConsistManagementApp {
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 60));
-        bogies.add(new Bogie("Sleeper", 70));
         bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("AC Chair", 55));
 
-        Map<String, List<Bogie>> grouped = bogies
+        int totalSeats = bogies
                 .stream()
-                .collect(Collectors.groupingBy(b -> b.name));
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
 
-        System.out.println("Grouped Bogies:");
-        for (Map.Entry<String, List<Bogie>> entry : grouped.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
+        System.out.println("Total Seating Capacity: " + totalSeats);
     }
 }
