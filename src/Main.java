@@ -1,29 +1,49 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
-class GoodsBogie {
-    String type;
-    String cargo;
+class Bogie {
+    String name;
+    int capacity;
 
-    GoodsBogie(String type, String cargo) {
-        this.type = type;
-        this.cargo = cargo;
+    Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
     }
 }
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
-        List<GoodsBogie> goods = new ArrayList<>();
-        goods.add(new GoodsBogie("Cylindrical", "Petroleum"));
-        goods.add(new GoodsBogie("Rectangular", "Coal"));
-        goods.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        List<Bogie> bogies = new ArrayList<>();
 
-        boolean isSafe = goods
+        for (int i = 0; i < 100000; i++) {
+            bogies.add(new Bogie("Sleeper", i % 100));
+        }
+
+        long startLoop = System.nanoTime();
+
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
+
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies
                 .stream()
-                .allMatch(b ->
-                        !b.type.equals("Cylindrical") || b.cargo.equals("Petroleum")
-                );
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        System.out.println("Train Safety Compliance: " + isSafe);
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        System.out.println("Loop Time: " + loopTime + " ns");
+        System.out.println("Stream Time: " + streamTime + " ns");
+        System.out.println("Results equal size: " + (loopResult.size() == streamResult.size()));
     }
 }
