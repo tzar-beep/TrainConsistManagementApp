@@ -1,11 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.LinkedList;
+import java.util.*;
 
 public class TrainConsistManagementApp {
     public static void main(String[] args) {
+
         System.out.println("=== Train Consist Management App ===");
 
         List<String> consist = new ArrayList<>();
@@ -16,9 +13,11 @@ public class TrainConsistManagementApp {
         passengerBogies.add("Sleeper");
         passengerBogies.add("AC Chair");
         passengerBogies.add("First Class");
+
         System.out.println("Passenger bogies after addition: " + passengerBogies);
 
         passengerBogies.remove("AC Chair");
+
         System.out.println("After removing AC Chair: " + passengerBogies);
         System.out.println("Is Sleeper present? " + passengerBogies.contains("Sleeper"));
         System.out.println("Final passenger bogies: " + passengerBogies);
@@ -28,10 +27,10 @@ public class TrainConsistManagementApp {
         bogieIds.add("B102");
         bogieIds.add("B103");
         bogieIds.add("B101");
+
         System.out.println("Unique Bogie IDs: " + bogieIds);
 
         LinkedList<String> train = new LinkedList<>();
-
         train.add("Engine");
         train.add("Sleeper");
         train.add("AC");
@@ -44,5 +43,17 @@ public class TrainConsistManagementApp {
         train.removeLast();
 
         System.out.println("Final Train Consist: " + train);
+
+        Map<String, Integer> bogieCapacity = new HashMap<>();
+
+        bogieCapacity.put("Sleeper", 72);
+        bogieCapacity.put("AC Chair", 60);
+        bogieCapacity.put("First Class", 24);
+
+        System.out.println("Bogie Capacity Mapping:");
+
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
     }
 }
